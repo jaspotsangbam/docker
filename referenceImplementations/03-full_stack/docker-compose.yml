@@ -57,30 +57,12 @@ services:
     networks:
       - hz_net
 
-  elasticsearch-static:
-    image: dotcms/elasticsearch:latest
-    ports:
-      - "9200:9200"
-    environment:
-      "PROVIDER_ELASTICSEARCH_HEAP_SIZE": '1500m'
-      "PROVIDER_ELASTICSEARCH_DNSNAMES": 'elasticsearch-static,elasticsearch'
-      "PROVIDER_ELASTICSEARCH_SVC_DELAY_MIN": '1'
-      "PROVIDER_ELASTICSEARCH_SVC_DELAY_STEP": '1'
-      "PROVIDER_ELASTICSEARCH_SVC_DELAY_MAX": '2'
-    volumes:
-      - esdata:/data
-    networks:
-      - es_net
-
   elasticsearch:
-    image: dotcms/elasticsearch:latest
-    depends_on:
-      - elasticsearch-static
+    image: dotcms/es-open-distro:latest
     environment:
       "PROVIDER_ELASTICSEARCH_HEAP_SIZE": '1024m'
-      "PROVIDER_ELASTICSEARCH_DNSNAMES": 'elasticsearch-static,elasticsearch'
-      "PROVIDER_ELASTICSEARCH_SVC_DELAY_MIN": '3'
-      "PROVIDER_ELASTICSEARCH_SVC_DELAY_MAX": '30'
+      "PROVIDER_ELASTICSEARCH_DNSNAMES": 'elasticsearch'
+      "ES_ADMIN_PASSWORD": 'admin'
     networks:
       - es_net
 
@@ -90,10 +72,11 @@ services:
       "CMS_HEAP_SIZE": '2g'
       "CMS_JAVA_OPTS": '-XX:+PrintFlagsFinal'
       "PROVIDER_DB_DNSNAME": 'db'
-      "PROVIDER_ELASTICSEARCH_DNSNAMES": 'elasticsearch-static, elasticsearch'
+      "PROVIDER_ELASTICSEARCH_DNSNAMES": 'elasticsearch'
       "PROVIDER_HAZELCAST_DNSNAMES": 'hazelcast'
+      "ES_ADMIN_PASSWORD": 'admin'
     depends_on:
-      - elasticsearch-static
+      - elasticsearch
       - hazelcast
       - db
       - http
