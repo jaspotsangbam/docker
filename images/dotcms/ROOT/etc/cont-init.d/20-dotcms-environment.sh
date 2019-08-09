@@ -21,7 +21,7 @@ JAVA_OPTS="$JAVA_OPTS ${CMS_JAVA_OPTS}"
 
 
 # Setup Java environment to import into restricted runtime env
-envvarlist=( "HOSTNAME" "LANG" "JAVA_HOME" "JAVA_OPTS")
+envvarlist=( "HOSTNAME" "LANG" "JAVA_HOME" "JAVA_OPTS" "ES_ADMIN_PASSWORD")
 
 mkdir -p /var/run/s6/env-dotcms
 

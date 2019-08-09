@@ -34,7 +34,7 @@ services:
       - http_net
 
   elasticsearch:
-    image: dotcms/es-open-distro:latest
+    image: es-open-distro:latest
     ports:
       - "9200:9200"
       - "9600:9600"
@@ -48,7 +48,7 @@ services:
       - es_net
 
   dotcms:
-    image: dotcms/dotcms:latest
+    image: issue-16806:latest
     environment:
       "CMS_HEAP_SIZE": '2g'
       "CMS_JAVA_OPTS": '-XX:+PrintFlagsFinal'
